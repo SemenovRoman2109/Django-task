@@ -1,0 +1,46 @@
+{% load static %}
+
+
+
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'onlineshopapp/css/product.css' %}">
+    <title>Product</title>
+</head>
+<body>
+    {% if request.user.is_authenticated %}
+        <div class="product">
+            <div class="display">
+                <div id = "content">
+                    <img src="{{ product.image.url }}" alt="">
+                    <h1>{{ product.name }}</h1>
+                    <p>{{ product.description }}</p>
+                </div>
+            </div>
+        </div>
+
+        <h2>КОМЕНТАРИИ:</h2>
+        {% for comment in list_comment %}
+            <div class="comment">
+                <h2> {{ comment.author }} </h2>
+                <p >{{ comment.content }}</p>
+            </div>
+        {% endfor %}
+        <form method="post">
+            {% csrf_token %}
+            <h3>Додати коментар</h3>
+            <p><textarea name="content" cols="30" rows="10" placeholder="Введiть ваш коментар" required style="resize: none; color:black"></textarea></p>
+            <p><input type="submit" value = "Додати коментар"></p>
+        </form>
+    {% else %}
+        <p>спочатку зареєструйся</p>
+    {% endif %}
+    
+    
+
+</body>
+</html>
